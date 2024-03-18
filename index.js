@@ -1,35 +1,27 @@
+// index.js
 import express from "express";
-import pg from "pg";
-import dotenv from "dotenv";
-dotenv.config();
-// Defining the PG client
-const db = new pg.Client({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABSE,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-});
-// Connecting to the database
-db.connect();
-// Configuring express
+import axios from "axios";
 const app = express();
-const port = 3000;
-app.use(express.static("public"));
-app.use(express.urlencoded({extended:true}));
+const PORT = process.env.PORT || 3000;
 
-// Main route
-app.get("/",async(req,res)=>{
+app.set('view engine', 'ejs');
 
-    res.render("index.ejs");
+// Endpoint to fetch book covers
+app.get('/covers', async (req, res) => {
+    try {
+        const response = await axios.get('https://openlibrary.org/dev/docs/api/covers');
+        const covers = response.data;
+        res.render('covers', { covers });
+    } catch (error) {
+        console.error('Error fetching book covers:', error);
+        res.status(500).send('Error fetching book covers');
+    }
+});
+
+app.get("/",(req,res)=>{
+    res.render("index");
 })
 
-// Sorting books by rating/recency
-app.post("/sort",async(req,res)=>{
-    
-})
-
-
-app.listen(port,()=>{
-    console.log("I am listening");
-})
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
