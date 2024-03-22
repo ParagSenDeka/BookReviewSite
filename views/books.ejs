@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+    <button id="dark-mode-toggle">Toggle Dark Mode</button> <!-- Add dark mode button here -->
+    <a href="/read" id="read-books">Go to read books</a>
+    <div id="popup" class="popup">
+        Book added successfully
+    </div>
+    <div class="container">
+        <% books.forEach(function(book) { %>
+            <div class="book-card">
+                <img class="book-cover" src="<%= book.cover %>" alt="<%= book.title %>">
+                <div class="book-details">
+                    <div class="book-title">
+                        <%= book.title %>
+                    </div>
+                    <div class="book-author">by <%= book.author %>
+                    </div>
+                    <div class="release-date">released:<%= book.release_date %>
+                    </div> 
+                    <button id="<%= book.id %>" class="read-button" type="submit">Read</button>
+                </div>
+            </div>
+            <% }); %>
+    </div>
+</body>
+<script src="static/script.js"></script>
+
+</html>
