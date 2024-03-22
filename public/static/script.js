@@ -1,4 +1,3 @@
-// Function to show the popup with a delay and then hide it
 const buttons = document.querySelectorAll(".read-button");
 const pop = document.getElementById("popup");
 const darkModeToggle = document.getElementById('dark-mode-toggle');
@@ -28,7 +27,7 @@ async function sendData(id) {
           throw new Error('Network response was not ok');
       }
 
-      const responseData = await response.json(); // Parsing the JSON response
+      const responseData = await response.json();
       if(responseData.answer==true){
         await fetch("/");
         alert("Book is added");
@@ -39,7 +38,7 @@ async function sendData(id) {
       }
     
   } catch (error) {
-      console.log('There was a problem with the fetch operation:', error);// Returning null in case of error
+      console.log('There was a problem with the fetch operation:', error);
   }
 }
 

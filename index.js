@@ -18,15 +18,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.json());
 
-// Define the number of books per page
 async function getBooks() {
     try {
         const response = await axios.get(`https://openlibrary.org/subjects/random.json`);
         const covers = response.data;
         const books = [];
-        const seenCoverIds = new Map(); // To keep track of seen cover IDs
+        const seenCoverIds = new Map();
         
-        // Process the fetched data
         covers.works.forEach(cover => {
             const book = {
                 id: cover.cover_id,
@@ -36,10 +34,9 @@ async function getBooks() {
                 release_date: cover.first_publish_year
             };
             
-            // Check if the cover ID is already seen, if not, add the book to the array
             if (!seenCoverIds.has(book.id)) {
                 books.push(book);
-                seenCoverIds.set(book.id, true); // Mark the cover ID as seen
+                seenCoverIds.set(book.id, true);
             }
         });
         return books;
@@ -51,7 +48,6 @@ async function getBooks() {
 const books = await getBooks();
 
 app.get("/", async (req, res) => {
-    // Render the index page with the fetched books
     res.render("books", { books: books });
 });
 
@@ -78,7 +74,6 @@ app.post("/read/:id", async (req, res) => {
     };
     res.json(data);
 });
-
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
