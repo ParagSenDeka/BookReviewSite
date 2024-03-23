@@ -129,7 +129,25 @@ body.dark-mode .book-details{
     transition: opacity 0.3s ease;
 }
 
+.unread-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
 .book-card:hover .read-button {
+    opacity: 1;
+    animation: fadeInUp 0.5s ease;
+}
+.book-card:hover .unread-button {
     opacity: 1;
     animation: fadeInUp 0.5s ease;
 }

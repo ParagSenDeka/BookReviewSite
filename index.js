@@ -75,6 +75,24 @@ app.post("/read/:id", async (req, res) => {
     res.json(data);
 });
 
+app.post("/delete/:id", async (req, res) => {
+    let answer=true;
+    const id = req.params.id;
+    const book =await books.find(book => book.id == id);
+    try {
+        await db.query("DELETE FROM books WHERE id=$1", [book.id]);
+        console.log("Book removed successfully.");
+    } catch (error) {
+        console.error("Book not found");
+        answer=false;
+    }
+
+    const data = {
+        answer: answer
+    };
+    res.json(data);
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
